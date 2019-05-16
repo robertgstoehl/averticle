@@ -3,8 +3,8 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
                       http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>io.vertx.blog</groupId>
-  <artifactId>my-first-app</artifactId>
+  <groupId>li.foo.vertx</groupId>
+  <artifactId>averticle</artifactId>
   <version>1.0-SNAPSHOT</version>
 
   <dependencies>
@@ -36,6 +36,32 @@
           <source>1.8</source>
           <target>1.8</target>
         </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+        <version>2.3</version>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>shade</goal>
+            </goals>
+            <configuration>
+              <transformers>
+                <transformer
+                  implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                  <manifestEntries>
+                    <Main-Class>io.vertx.core.Starter</Main-Class>
+                    <Main-Verticle>li.foo.vertx.AVerticle</Main-Verticle>
+                  </manifestEntries>
+                </transformer>
+              </transformers>
+              <artifactSet/>
+              <outputFile>${project.build.directory}/${project.artifactId}-${project.version}-fat.jar</outputFile>
+            </configuration>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
   </build>
