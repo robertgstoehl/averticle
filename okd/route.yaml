@@ -3,7 +3,7 @@ kind: Route
 metadata:
   name: averticle
 spec:
-  host: "averticle.192.168.42.23.nip.io"
+  host: "averticle.192.168.42.130.nip.io"
   port:
     targetPort: "8080-tcp"
   to:
