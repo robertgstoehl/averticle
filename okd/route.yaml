@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Route
+metadata:
+  name: averticle
+spec:
+  host: "averticle.192.168.42.23.nip.io"
+  port:
+    targetPort: "8080-tcp"
+  to:
+    kind: Service
+    name: averticle
+    weight: 100
+  wildcardPolicy: None
