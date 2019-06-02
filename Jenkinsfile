@@ -3,9 +3,11 @@ pipeline {
   stages {
     stage('Package & Verify') {
       steps {
-		    openshift.withCluster() {
-			    openshift.withProject("staging"){
-				    sh 'oc project'
+	      script {
+	        openshift.withCluster() {
+			      openshift.withProject("staging"){
+				      echo "Hello from project ${openshift.project()} in cluster ${openshift.cluster()}"
+	          }
 	        }
 	      }
       }
