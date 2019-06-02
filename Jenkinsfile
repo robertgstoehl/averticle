@@ -30,7 +30,7 @@ pipeline {
                   obj.metadata.labels[ "promoted-on" ] = timestamp
               }
               echo "${objs.spec.template.spec.containers[0]}"
-              objs.spec.template.spec.containers[0].image = "averticle:staging"
+              objs.spec.template.spec.containers[0][0].image = "averticle:staging"
               openshift.withProject("staging"){
                 input "Promote averticle to staging env?"
 
