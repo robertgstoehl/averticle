@@ -7,8 +7,7 @@ pipeline {
           openshift.withCluster() {
             openshift.withProject("development"){
               echo "tagging averticle:latest in project ${openshift.project()} in cluster ${openshift.cluster()}"
-			          openshift.tag("averticle:latest", "averticle:staging") 
-              }
+			        openshift.tag("averticle:latest", "averticle:staging") 
             }
           }
         }
