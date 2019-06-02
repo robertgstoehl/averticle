@@ -31,8 +31,9 @@ pipeline {
               }
               echo "${objs.spec.template.spec.containers[0][0]}"
               objs.spec.template.spec.containers[0][0].image = "staging/averticle:staging"
-              objs.spec.triggers.imageChangeParams.from.name = "staging/averticle:staging"
               echo "${objs.spec.template.spec.containers[0][0]}"
+              echo "${objs.spec.triggers}"
+              objs.spec.triggers.imageChangeParams.from.name = "staging/averticle:staging"
               openshift.withProject("staging"){
                 input "Promote averticle to staging env?"
 
