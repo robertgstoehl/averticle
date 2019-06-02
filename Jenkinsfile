@@ -5,7 +5,7 @@ pipeline {
       steps {
         script {
           openshift.withCluster() {
-            openshift.withProject("developemnt"){
+            openshift.withProject("development"){
               echo "Hello from project ${openshift.project()} in cluster ${openshift.cluster()}"
             }
           }
@@ -16,7 +16,7 @@ pipeline {
       steps {
         script {
           openshift.withCluster() {
-            openshift.withProject("developemnt"){
+            openshift.withProject("development"){
               def averticle = openshift.selector( 'dc', 'averticle')
 
               // Model the source objects using the 'exportable' flag to strip cluster
