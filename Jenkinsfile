@@ -6,7 +6,9 @@ pipeline {
         script {
           openshift.withCluster() {
             openshift.withProject("development"){
-              echo "Hello from project ${openshift.project()} in cluster ${openshift.cluster()}"
+              echo "tagging averticle:latest in project ${openshift.project()} in cluster ${openshift.cluster()}"
+			          openshift.tag("averticle:latest", "averticle:staging") 
+              }
             }
           }
         }
@@ -28,8 +30,9 @@ pipeline {
               for ( obj in objs ) {
                   obj.metadata.labels[ "promoted-on" ] = timestamp
               }
+              obj.spec.template.spec.containers[0].image = "averticle:staging"
               openshift.withProject("staging"){
-                input "Ready to update QE cluster with averticle?"
+                input "Promote averticle to staging env?"
 
                 // Note that the selector is relative to its closure body and
                 // operates on the qecluster now.
@@ -38,7 +41,7 @@ pipeline {
                 openshift.create( objs )
 
                 // Let's wait until at least one pod is Running
-                averticle.related( 'pods' ).untilEach {
+                averticle.related('pods').untilEach {
                     return it.object().status.phase == 'Running'
                 }
               }

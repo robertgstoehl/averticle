@@ -39,4 +39,12 @@ oc apply -f okd/route.yaml
 
 oc project management
 oc apply -f okd/pipeline.yaml
-oc project development
+
+oc login -u system:admin
+# needed to access other projects than management...
+oc adm policy add-cluster-role-to-user edit system:serviceaccount:management:jenkins
+# https://docs.openshift.com/enterprise/3.0/dev_guide/image_pull_secrets.html#allowing-pods-to-reference-images-across-projects
+oc policy add-role-to-user system:image-puller system:serviceaccount:staging:default --namespace=development
+oc policy add-role-to-user system:image-puller system:serviceaccount:production:default --namespace=development
+
+oc login -u developer -p developer
