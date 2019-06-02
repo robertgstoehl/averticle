@@ -7,7 +7,7 @@ pipeline {
           openshift.withCluster() {
             openshift.withProject("development"){
               echo "tagging averticle:latest in project ${openshift.project()} in cluster ${openshift.cluster()}"
-			        openshift.tag("averticle:latest", "averticle:staging") 
+			        openshift.tag("development/averticle:latest", "staging/averticle:staging") 
             }
           }
         }
@@ -30,7 +30,8 @@ pipeline {
                   obj.metadata.labels[ "promoted-on" ] = timestamp
               }
               echo "${objs.spec.template.spec.containers[0][0]}"
-              objs.spec.template.spec.containers[0][0].image = "averticle:staging"
+              objs.spec.template.spec.containers[0][0].image = "staging/averticle:staging"
+              objs.spec.triggers.imageChangeParams.from.name = "staging/averticle:staging"
               echo "${objs.spec.template.spec.containers[0][0]}"
               openshift.withProject("staging"){
                 input "Promote averticle to staging env?"
