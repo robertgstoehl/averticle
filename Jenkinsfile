@@ -29,11 +29,11 @@ pipeline {
               for ( obj in objs ) {
                   obj.metadata.labels[ "promoted-on" ] = timestamp
               }
-              echo "${objs.spec.template.spec.containers[0][0]}"
-              objs.spec.template.spec.containers[0][0].image = "staging/averticle:staging"
-              echo "${objs.spec.template.spec.containers[0][0]}"
-              echo "${objs.spec.triggers}"
-              objs.spec.triggers.imageChangeParams.from.name = "staging/averticle:staging"
+              //echo "${objs.spec.template.spec.containers[0][0]}"
+              //objs.spec.template.spec.containers[0][0].image = "staging/averticle:staging"
+              //echo "${objs.spec.template.spec.containers[0][0]}"
+              //echo "${objs.spec.triggers}"
+              //objs.spec.triggers.imageChangeParams.from.name = "staging/averticle:staging"
               openshift.withProject("staging"){
                 input "Promote averticle to staging env?"
 
@@ -56,4 +56,4 @@ pipeline {
   }
 }
 
-//vim: ai ts=2 sts=2 et sw=2 ft=groovy
+//vim: autoindent tabstop=2 softtabstop=2 expandtab shiftwidth=2 fil:
