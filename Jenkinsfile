@@ -33,7 +33,7 @@ pipeline {
               }
               //This might break, fix it...
               def dc = objs[0]
-              echo "${averticle.asJson()}
+              echo "${averticle.asJson()}"
 
               //echo "${objs.spec.template.spec.containers[0][0]}"
               //objs.spec.template.spec.containers[0][0].image = "staging/averticle:staging"
