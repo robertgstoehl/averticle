@@ -29,7 +29,11 @@ pipeline {
               for ( obj in objs ) {
                   echo "got o from selektor of Kind: ${obj.kind} with name ${obj.metadata.name}"
                   obj.metadata.labels[ "promoted-on" ] = timestamp
+                  //obj should be a map for any given match in the selctor up above
               }
+              //This might break, fix it...
+              def dc = objs[0]
+              echo "${averticle.asJson()}
 
               //echo "${objs.spec.template.spec.containers[0][0]}"
               //objs.spec.template.spec.containers[0][0].image = "staging/averticle:staging"
