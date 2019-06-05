@@ -23,7 +23,7 @@ pipeline {
 
             openshift.withProject("staging"){
               input "Promote averticle to staging env?"
-              openshift.replace(readFile('okd/staging.yaml'))
+              def averticle = openshift.replace(readFile('okd/staging.yaml'))
               // Let's wait until at least one pod is Running
               averticle.related('pods').untilEach {
                   return it.object().status.phase == 'Running'
