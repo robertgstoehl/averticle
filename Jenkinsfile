@@ -27,8 +27,10 @@ pipeline {
               // Modify the models as you see fit.
               def timestamp = "${System.currentTimeMillis()}"
               for ( obj in objs ) {
+                  echo "got o from selektor of Kind: ${obj.kind} with name ${obj.metadata.name}"
                   obj.metadata.labels[ "promoted-on" ] = timestamp
               }
+
               //echo "${objs.spec.template.spec.containers[0][0]}"
               //objs.spec.template.spec.containers[0][0].image = "staging/averticle:staging"
               //echo "${objs.spec.template.spec.containers[0][0]}"
