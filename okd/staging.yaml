@@ -1,0 +1,94 @@
+apiVersion: v1
+items:
+- apiVersion: image.openshift.io/v1
+  kind: ImageStream
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: null
+    labels:
+      app: averticle
+    name: averticle
+  spec:
+    lookupPolicy:
+      local: false
+  status:
+    dockerImageRepository: ""
+- apiVersion: apps.openshift.io/v1
+  kind: DeploymentConfig
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: null
+    labels:
+      app: averticle
+    name: averticle
+  spec:
+    replicas: 1
+    selector:
+      app: averticle
+      deploymentconfig: averticle
+    strategy:
+      resources: {}
+    template:
+      metadata:
+        annotations:
+          openshift.io/generated-by: OpenShiftNewApp
+        creationTimestamp: null
+        labels:
+          app: averticle
+          deploymentconfig: averticle
+      spec:
+        containers:
+        - image: averticle:latest
+          name: averticle
+          ports:
+          - containerPort: 5701
+            protocol: TCP
+          - containerPort: 8080
+            protocol: TCP
+          resources: {}
+    test: false
+    triggers:
+    - type: ConfigChange
+    - imageChangeParams:
+        automatic: true
+        containerNames:
+        - averticle
+        from:
+          kind: ImageStreamTag
+          name: averticle:latest
+      type: ImageChange
+  status:
+    availableReplicas: 0
+    latestVersion: 0
+    observedGeneration: 0
+    replicas: 0
+    unavailableReplicas: 0
+    updatedReplicas: 0
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: null
+    labels:
+      app: averticle
+    name: averticle
+  spec:
+    ports:
+    - name: 5701-tcp
+      port: 5701
+      protocol: TCP
+      targetPort: 5701
+    - name: 8080-tcp
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+    selector:
+      app: averticle
+      deploymentconfig: averticle
+  status:
+    loadBalancer: {}
+kind: List
+metadata: {}
