@@ -34,11 +34,14 @@ while [ $(oc get build | grep -v Complete | wc -l) -eq 1 ]; do echo "waiting for
 # ok then, now how to instantiate a vertx app?
 # oc new-app vertx-s2i~https://github.com/robertgstoehl/averticle.git
 oc project development
-oc apply -f okd/app.yaml
-oc apply -f okd/route.yaml
+oc apply -f okd/development.yaml
+# oc apply -f okd/route.yaml
 
-oc project management
-oc apply -f okd/pipeline.yaml
+oc project development
+oc apply -f okd/staging.yaml
+
+oc project staging
+oc apply -f okd/staging.yaml
 
 oc login -u system:admin
 # needed to access other projects than management...
@@ -48,3 +51,4 @@ oc policy add-role-to-user system:image-puller system:serviceaccount:staging:def
 oc policy add-role-to-user system:image-puller system:serviceaccount:production:default --namespace=development
 
 oc login -u developer -p developer
+oc project development
